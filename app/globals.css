@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --font-jetbrainsMono: "JetBrains Mono", "Courier New", monospace;
+  }
+
   body {
-    @apply font-primary bg-primary text-white leading-loose;
+    @apply font-primary bg-primary text-white leading-[1.625];
+    /* Replaced leading-loose with explicit value */
   }
 }
