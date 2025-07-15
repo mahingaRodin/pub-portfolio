@@ -1,0 +1,24 @@
+services:
+  frontend:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - rodin-net
+
+  backend:
+    build:
+      context: ./bePortfolio
+    ports:
+      - "8282:8080"
+    environment:
+      SPRING_MAIL_USERNAME: agressive.one04@gmail.com
+      SPRING_MAIL_PASSWORD: whwtzzwgbevdkzpu
+    networks:
+      - rodin-net
+
+networks:
+  rodin-net:
