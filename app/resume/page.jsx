@@ -298,7 +298,7 @@ const Resume = () => {
                                 {skill.icon}
                               </div>
                             </TooltipTrigger>
-                            <TooltipContent>
+                            <TooltipContent className="text-black bg-white">
                               <p className="capitalize">{skill.name}</p>
                             </TooltipContent>
                           </Tooltip>
