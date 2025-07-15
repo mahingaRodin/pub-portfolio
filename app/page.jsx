@@ -13,7 +13,7 @@ export default function Home() {
           <div className="order-2 text-center xl:text-left xl:order-none">
             <span className="text-xl">Software Programmer</span>
             <h1 className="h1">
-              Hello I'm <br />{" "}
+              Hello I’m <br />{" "}
               <span className="text-accent">Mahinga Rodin</span>
             </h1>
             <p className="mx-w-[500px] mb-9 text-white/80">
@@ -44,7 +44,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Stats/>
+      <Stats />
     </section>
   );
 }
