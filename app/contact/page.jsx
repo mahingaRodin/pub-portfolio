@@ -34,8 +34,86 @@ const info = [
 ];
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSelectChange = (value) => {
+    setFormData(prev => ({...prev, service: value}))
+  }
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setSubmitStatus(null);
+
+  try {
+    // Transform form data to match backend DTO structure
+    const requestBody = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      subject: formData.service, // Map service to subject
+      message: formData.message,
+      // phone is included in case you want to handle it later
+      phone: formData.phone,
+    };
+
+    const response = await fetch("http://localhost:421/be/api/contact/send", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (response.ok) {
+      setSubmitStatus({
+        success: true,
+        message: "Message sent successfully!",
+      });
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        service: "",
+        message: "",
+      });
+    } else {
+      const errorData = await response.json();
+      setSubmitStatus({
+        success: false,
+        message: errorData.message || "Failed to send message",
+      });
+    }
+  } catch (error) {
+    setSubmitStatus({
+      success: false,
+      message: "Network error. Please try again.",
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -53,7 +131,10 @@ const Contact = () => {
         <div className="flex flex-col xl:flex-row gap-[30px]">
           {/* form */}
           <div className="xl:h-[54%] order-2 xl:order-none ">
-            <form className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl"
+            >
               <h3 className="text-4xl text-accent">Let's Work Together!</h3>
               <p className="text-white/60">
                 Whether you need a backend system, a secure app, or a smart
@@ -61,36 +142,91 @@ const Contact = () => {
               </p>
               {/* input */}
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <Input type="firstname" placeholder="First Name" />
-                <Input type="lastname" placeholder="Last Name" />
-                <Input type="email" placeholder="Email Address" />
-                <Input type="phone" placeholder="Phone Number" />
+                <Input
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  placeholder="First Name"
+                  required
+                />
+                <Input
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  placeholder="Last Name"
+                  required
+                />
+                <Input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email Address"
+                  required
+                />
+                <Input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Phone Number"
+                />
               </div>
               {/* select */}
-              <Select>
+              <Select
+                onValueChange={handleSelectChange}
+                value={formData.service}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select A Service" />
-                  <SelectContent className="bg-primary">
-                    <SelectGroup>
-                      <SelectLabel>Select A Service</SelectLabel>
-                      <SelectItem value="est">Backend Development</SelectItem>
-                      <SelectItem value="wst">Embedded Systems</SelectItem>
-                      <SelectItem value="cst">Cyber Security</SelectItem>
-                      <SelectItem value="mst">
-                        Artifical Intelligence
-                      </SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
                 </SelectTrigger>
+                <SelectContent className="bg-primary">
+                  <SelectGroup>
+                    <SelectLabel>Select A Service</SelectLabel>
+                    <SelectItem value="Backend Development">
+                      Backend Development
+                    </SelectItem>
+                    <SelectItem value="Embedded Systems">
+                      Embedded Systems
+                    </SelectItem>
+                    <SelectItem value="Cyber Security">
+                      Cyber Security
+                    </SelectItem>
+                    <SelectItem value="Artificial Intelligence">
+                      Artificial Intelligence
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
               </Select>
               {/* textarea */}
               <Textarea
                 className="h-[200px]"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 placeholder="Type Your Message Here!"
+                required
               />
+              {/* status message */}
+              {submitStatus && (
+                <div
+                  className={`p-3 rounded-md ${
+                    submitStatus.success
+                      ? "bg-green-500/20 text-green-500"
+                      : "bg-red-500/20 text-red-500"
+                  }`}
+                >
+                  {submitStatus.message}
+                </div>
+              )}
               {/* btn */}
-              <Button size="md" className="max-w-40">
-                Send Message
+              <Button
+                type="submit"
+                size="md"
+                className="max-w-40"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </div>

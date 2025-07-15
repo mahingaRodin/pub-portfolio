@@ -4,17 +4,26 @@ import lombok.Data;
 
 @Data
 public class ContactMessageDto {
-    private String name;      // Sender's name
+    private String firstName;
+    private String lastName;
     private String email;     // Sender's email
     private String subject;   // Email subject
     private String message;  // Email content
 
-    public String getName() {
-        return name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getEmail() {

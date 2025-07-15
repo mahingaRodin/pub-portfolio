@@ -1,10 +1,42 @@
+"use client";
+
 import Photo from "@/components/Photo";
 import Social from "@/components/Social";
 import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { FiDownload } from "react-icons/fi";
 
 export default function Home() {
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownloadCV = async () => {
+    setIsDownloading(true);
+    try {
+      const response = await fetch("http://localhost:421/be/api/cv/download", {
+        method: "GET",
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Mahinga_Rodin_CV.pdf";
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      } else {
+        console.error("Failed to download CV");
+      }
+    } catch (error) {
+      console.error("Error downloading CV: ", error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   return (
     <section className="h-full">
       <div className="container mx-auto h-full">
@@ -26,9 +58,17 @@ export default function Home() {
                 variant="outline"
                 size="lg"
                 className="flex gap-2 items-center uppercase"
+                onClick={handleDownloadCV}
+                disabled={isDownloading}
               >
-                <span>Download CV</span>
-                <FiDownload className="text-xl" />
+                {isDownloading ? (
+                  <span>Downloading...</span>
+                ) : (
+                  <>
+                    <span>Download CV</span>
+                    <FiDownload className="text-xl" />
+                  </>
+                )}
               </Button>
               <div className="mb-8 xl:mb-0">
                 <Social

@@ -41,7 +41,7 @@ public class ContactController {
         confirmation.setTo(contact.getEmail());
         confirmation.setSubject("We've received your message!");
         confirmation.setText(
-                "Dear " + contact.getName() + ",\n\n" +
+                "Dear " + contact.getFirstName() + " " + contact.getLastName() + ",\n\n" +
                         "Thank you for contacting me. I've received your message regarding:\n" +
                         "\"" + contact.getSubject() + "\"\n\n" +
                         "I'll get back to you as soon as possible.\n\n" +
@@ -57,7 +57,7 @@ public class ContactController {
         notification.setSubject("New Portfolio Contact: " + contact.getSubject());
         notification.setText(
                 "You have a new message from your portfolio:\n\n" +
-                        "From: " + contact.getName() + "\n" +
+                        "From: " + contact.getFirstName() + " " + contact.getLastName() + "\n" +
                         "Email: " + contact.getEmail() + "\n\n" +
                         "Subject: " + contact.getSubject() + "\n\n" +
                         "Message:\n" + contact.getMessage()
