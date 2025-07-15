@@ -23,8 +23,8 @@ const projects = [
       "An IoT-based solution using sensors to monitor soil and automate irrigation for better crop yield.",
     stack: [{ name: "Arduino" }, { name: "C++" }, { name: "NPK Sensor" }],
     image: "/assets/work/smart-farming.png",
-    live: "",
-    github: "",
+    live: "#tobelater-released",
+    github: "https://github.com/mahingaRodin/AgroSenseAi",
   },
   {
     num: "02",
@@ -38,8 +38,8 @@ const projects = [
       { name: "JavaScript" },
     ],
     image: "/assets/work/emotion-bot.png",
-    live: "",
-    github: "",
+    live: "#tobelater-released",
+    github: "mailTo: mahingarodin@gmail.com for more info",
   },
   {
     num: "03",
@@ -65,7 +65,7 @@ const projects = [
       { name: "MySQL" },
     ],
     image: "/assets/work/hotel-management.png",
-    live: "",
+    live: "#tobereleased-later",
     github: "https://github.com/mahingaRodin/Hotel-App",
   },
 
@@ -77,8 +77,9 @@ const projects = [
       "A mobile app built in Thunkable for teaching students basic AI and coding concepts interactively.",
     stack: [{ name: "Thunkable" }, { name: "Firebase" }],
     image: "/assets/work/thunkable-app.png",
-    live: "",
-    github: "",
+    live: "#tobereleased later",
+    github:
+      "https://x.thunkable.com/projects/6864f7bca36a3b0e0680b0d9/1d5105c9-cf42-469e-8a1b-6250d5d26507/designer",
   },
 ];
 
