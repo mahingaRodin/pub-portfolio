@@ -49,7 +49,7 @@ const projects = [
       "A Spring Boot REST API powering a student ePortfolio tracking their performances at school.",
     stack: [{ name: "Java" }, { name: "Spring Boot" }, { name: "MySQL" }],
     image: "/assets/work/eportfolio-api.png",
-    live: "",
+    live: "http://197.243.26.64:5400/auth/login",
     github: "",
   },
   {
@@ -66,7 +66,7 @@ const projects = [
     ],
     image: "/assets/work/hotel-management.png",
     live: "",
-    github: "",
+    github: "https://github.com/mahingaRodin/Hotel-App",
   },
 
   {
